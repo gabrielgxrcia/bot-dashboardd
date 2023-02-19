@@ -1,4 +1,7 @@
 const express = require('express')
+const https = require('https')
+const fs = require('fs')
+const path = require('path')
 const Discord = require('discord.js')
 const DiscordOauth2 = require('discord-oauth2')
 const dotenv = require('dotenv')
@@ -9,7 +12,6 @@ const session = require('express-session')
 dotenv.config()
 
 const app = express()
-const port = process.env.PORT || 3000
 const sessionSecret =
   process.env.SESSION_SECRET || '1Z6r9an8v7oXBfT2_bqK3ausxJkaboFW'
 const token = process.env.DISCORD_API_TOKEN
@@ -35,7 +37,7 @@ const client = new Discord.Client({
 const oauth = new DiscordOauth2({
   clientId: '1076701364115214458',
   clientSecret: '1Z6r9an8v7oXBfT2_bqK3ausxJkaboFW',
-  redirectUri: 'https://localhost:3000/auth/discord/callback',
+  redirectUri: 'https://localhost/auth/discord/callback',
 })
 
 app.set('view engine', 'ejs')
@@ -53,7 +55,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/login', (req, res) => {
-  const redirectUri = `https://localhost:3000/dashboard`
+  const redirectUri = `https://localhost/dashboard`
   const scope = 'identify guilds'
   const authUrl = oauth.generateAuthUrl({
     scope,
@@ -109,6 +111,11 @@ client.on('ready', () => {
 
 client.login(token)
 
-app.listen(port, () => {
-  console.log(`Server started on port ${port}`)
+const options = {
+  key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
+  cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem')),
+}
+
+https.createServer(options, app).listen(443, () => {
+  console.log('Server started on port 443')
 })
