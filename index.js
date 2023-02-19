@@ -55,7 +55,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/login', (req, res) => {
-  const redirectUri = `https://localhost/dashboard`
+  const redirectUri = 'https://localhost/auth/discord/callback'
   const scope = 'identify guilds'
   const authUrl = oauth.generateAuthUrl({
     scope,
@@ -77,6 +77,7 @@ app.get('/auth/discord/callback', async (req, res) => {
     const token = await oauth.tokenRequest({
       code,
       scope: 'identify guilds',
+      grantType: 'authorization_code',
     })
     console.log(token)
     req.session.token = token
