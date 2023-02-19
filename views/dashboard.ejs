@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Minha Aplicação - Dashboard</title>
+  </head>
+  <body>
+    <h1>Olá, <%= user.username %>!</h1>
+    <p>
+      Você está autenticado com sucesso. Abaixo está a lista de suas guildas:
+    </p>
+    <ul>
+      <% for (let guild of guilds) { %>
+      <li><%= guild.name %></li>
+      <% } %>
+    </ul>
+    <a href="/logout">Sair</a>
+    <script src="/index.js"></script>
+  </body>
+</html>
