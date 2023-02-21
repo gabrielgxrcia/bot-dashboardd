@@ -24,6 +24,7 @@ const client = new Discord.Client({
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent,
     GatewayIntentBits.GuildMessageReactions,
+    GatewayIntentBits.DirectMessageTyping,
   ],
   partials: [
     Partials.Message,
@@ -56,10 +57,11 @@ app.get('/', (req, res) => {
 
 app.get('/login', (req, res) => {
   const redirectUri = 'https://localhost/auth/discord/callback'
-  const scope = 'identify guilds'
+  const scopes = ['identify', 'guilds', 'connections']
   const authUrl = oauth.generateAuthUrl({
-    scope,
-    redirectUri,
+    scope: scopes.join(' '),
+    prompt: 'consent',
+    state: 'some-state',
   })
   res.redirect(authUrl)
 })
@@ -89,16 +91,37 @@ app.get('/auth/discord/callback', async (req, res) => {
 })
 
 app.get('/dashboard', async (req, res) => {
-  if (!req.session.token) {
-    res.redirect('/login')
-    return
-  }
   try {
-    const user = await oauth.getUser(req.session.token.access_token)
-    const guilds = await oauth.getUserGuilds(req.session.token.access_token)
+    if (!req.session.token) {
+      return res.redirect('/login')
+    }
+    const { access_token } = req.session.token
+    const fullUser = await oauth.getUser(access_token, {
+      scope: 'identify',
+      loadGuilds: true,
+    })
+    const { username, discriminator, avatar } = fullUser
+    const avatarURL = `https://cdn.discordapp.com/avatars/${fullUser.id}/${avatar}.png`
+    const friendData = await oauth.getUserConnections(access_token)
+    const friends = friendData.filter(
+      connection => connection.type === 'discord'
+    )
+    console.log(friends)
+    const user = { username, discriminator, avatarURL, friends }
+    const guilds = await oauth.getUserGuilds(access_token)
+    const guildsWithIconURL = await Promise.all(
+      guilds.map(async guild => {
+        guild.iconURL = guild.icon
+          ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`
+          : null
+        return guild
+      })
+    )
+
     res.render('dashboard', {
       user,
-      guilds,
+      guilds: guildsWithIconURL,
+      friends,
     })
   } catch (err) {
     console.error(err)

@@ -2,17 +2,42 @@
 <html>
   <head>
     <title>Minha Aplicação - Dashboard</title>
+    <link rel="stylesheet" href="./dashboard.css" />
   </head>
   <body>
-    <h1>Olá, <%= user.username %>!</h1>
-    <p>
-      Você está autenticado com sucesso. Abaixo está a lista de suas guildas:
-    </p>
-    <ul>
-      <% for (let guild of guilds) { %>
-      <li><%= guild.name %></li>
-      <% } %>
-    </ul>
+    <div class="container">
+      <h1>
+        Bem-vindo, <%= user.username %>#<%= user.discriminator %>
+        <img src="<%= user.avatarURL %>" alt="<%= user.username %> Avatar" />
+      </h1>
+      <h2>Seus servidores:</h2>
+
+      <div class="guild">
+        <div class="guilds">
+          <ul>
+            <% for (let i = 0; i < guilds.length; i++) { %>
+            <li>
+              <% if (guilds[i].iconURL) { %>
+              <img
+                src="<%= guilds[i].iconURL %>"
+                alt="<%= guilds[i].name %> Icon"
+                0=""
+              />
+              <% } %> <%= guilds[i].name %>
+            </li>
+            <% } %>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="teste">
+      <h2>Seus amigos:</h2>
+      <ul>
+        <% user.friends.forEach(friend => { %>
+        <li><%= friend.name %> (<%= friend.id %>)</li>
+        <% }) %>
+      </ul>
+    </div>
     <a href="/logout">Sair</a>
     <script src="/index.js"></script>
   </body>
