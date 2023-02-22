@@ -3,18 +3,27 @@ const https = require('https')
 const fs = require('fs')
 const path = require('path')
 const Discord = require('discord.js')
+const { Client, GatewayIntentBits, Partials } = require('discord.js')
 const DiscordOauth2 = require('discord-oauth2')
 const dotenv = require('dotenv')
-const { Client, GatewayIntentBits, Partials } = require('discord.js')
 const ejs = require('ejs')
 const session = require('express-session')
 
 dotenv.config()
+const sessionSecret =
+  process.env.SESSION_SECRET || 'ASgwi-hE5W6k1R7bC8Q3zTtYgAaj2xL_'
+const discordAPIToken = process.env.DISCORD_API_TOKEN
 
 const app = express()
-const sessionSecret =
-  process.env.SESSION_SECRET || '1Z6r9an8v7oXBfT2_bqK3ausxJkaboFW'
-const token = process.env.DISCORD_API_TOKEN
+app.set('view engine', 'ejs')
+app.use(express.static('public'))
+app.use(
+  session({
+    secret: sessionSecret,
+    resave: false,
+    saveUninitialized: false,
+  })
+)
 
 const client = new Discord.Client({
   intents: [
@@ -37,19 +46,9 @@ const client = new Discord.Client({
 
 const oauth = new DiscordOauth2({
   clientId: '1076701364115214458',
-  clientSecret: '1Z6r9an8v7oXBfT2_bqK3ausxJkaboFW',
+  clientSecret: 'ASgwi-hE5W6k1R7bC8Q3zTtYgAaj2xL_',
   redirectUri: 'https://localhost/auth/discord/callback',
 })
-
-app.set('view engine', 'ejs')
-app.use(express.static('public'))
-app.use(
-  session({
-    secret: sessionSecret,
-    resave: false,
-    saveUninitialized: false,
-  })
-)
 
 app.get('/', (req, res) => {
   res.render('index')
@@ -97,17 +96,12 @@ app.get('/dashboard', async (req, res) => {
     }
     const { access_token } = req.session.token
     const fullUser = await oauth.getUser(access_token, {
-      scope: 'identify',
+      scopes: ['identify'],
       loadGuilds: true,
     })
     const { username, discriminator, avatar } = fullUser
     const avatarURL = `https://cdn.discordapp.com/avatars/${fullUser.id}/${avatar}.png`
-    const friendData = await oauth.getUserConnections(access_token)
-    const friends = friendData.filter(
-      connection => connection.type === 'discord'
-    )
-    console.log(friends)
-    const user = { username, discriminator, avatarURL, friends }
+    const user = { username, discriminator, avatarURL }
     const guilds = await oauth.getUserGuilds(access_token)
     const guildsWithIconURL = await Promise.all(
       guilds.map(async guild => {
@@ -117,11 +111,9 @@ app.get('/dashboard', async (req, res) => {
         return guild
       })
     )
-
     res.render('dashboard', {
       user,
       guilds: guildsWithIconURL,
-      friends,
     })
   } catch (err) {
     console.error(err)
@@ -133,7 +125,9 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}`)
 })
 
-client.login(token)
+client.login(
+  'MTA3NjcwMTM2NDExNTIxNDQ1OA.GKAbgf.mt6DO_CG-UE290ge7lB8CPeY-mLKBABBbbesUI'
+)
 
 const options = {
   key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
