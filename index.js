@@ -16,6 +16,8 @@ const discordAPIToken = process.env.DISCORD_API_TOKEN
 
 const app = express()
 app.set('view engine', 'ejs')
+app.set('js', 'application/javascript')
+app.set('html', 'text/html')
 app.use(express.static('public'))
 app.use(
   session({

@@ -1,97 +1,276 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
-
-* {
-  margin: 0;
-  box-sizing: border-box;
-  padding: 0;
-}
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
 
 :root {
-  --bg-color: #121314;
-  --primary-color: rgb(50, 50, 50);
-  --scrollbar-color: rgb(61, 60, 66);
-  --text-color: #e1e1e1;
+  --dark-bg: #36393f;
+  --dark-server-list: #202225;
+  --server-divider: #2d2f32;
+  --blurple: #7289da;
+  --dark-blurple: #4d5e94;
+  --green: #43b581;
+  --dark-primary: #2f3136;
+  --text-gray: #dcddde;
+  --user-box: #232428;
+  --iconColor: #b9bbbe;
+  --red: #dd4444;
 }
 
 body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--dark-bg);
+  color: #ffffff;
   font-family: 'Roboto', sans-serif;
-  background-color: #121314;
 }
 
-.container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.rootDiv {
+  display: grid;
+  grid-template-columns: 0px 70px 300px;
+  grid-template-rows: auto;
 }
 
-h1 img {
-  width: 50px;
-  padding: 5px;
-  border-radius: 30px;
-}
-
-.guild {
-  background-color: var(--primary-color);
-  width: 250px;
-  padding: 10px;
-  max-height: 700px;
-  overflow: auto;
-  scrollbar-width: none;
+.servers {
+  width: 70px;
+  height: 100vh;
+  background-color: var(--dark-server-list);
+  overflow-y: auto;
+  scrollbar-width: 0px;
   display: flex;
+  align-items: center;
   flex-direction: column;
+  user-select: none;
 }
 
-.guild::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-  margin-right: 10px;
+.servers::-webkit-scrollbar,
+.nav::-webkit-scrollbar {
+  width: 0px;
 }
 
-.guild::-webkit-scrollbar-thumb {
-  background-color: var(--scrollbar-color);
-  border: 4px solid var(--scrollbar-color);
-  border-radius: 3px;
-  background-image: -webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    from(#e3e3e3),
-    to(#d9d9d9)
-  );
+.homebutton {
+  position: relative;
+  background-color: var(--dark-bg);
+  color: #ffffff;
+  border-radius: 50%;
+  text-align: center;
+  height: 30px;
+  width: 30px;
+  padding: 11px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-.guild::-webkit-scrollbar-track {
-  background-color: var(--primary-color);
-}
-
-.guild::-webkit-scrollbar-corner {
-  border: none;
-  background: none;
-}
-
-.guilds {
+.server {
+  background-color: var(--dark-bg);
+  color: #ffffff;
+  border-radius: 50%;
+  text-align: center;
+  width: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-color);
-  font-weight: 400;
+  margin-top: 7px;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-.guilds ul {
+.server img {
+  height: 48px;
+  width: 48px;
+  border-radius: 50%;
+  text-align: center;
+  transition: 0.2s;
+  user-select: none;
+}
+
+.invite {
+  color: var(--green) !important;
+  font-size: 15px;
+}
+
+.invite:hover {
+  color: #ffffff !important;
+  background-color: var(--green) !important;
+}
+
+.server-active,
+.server:hover {
+  background-color: var(--blurple);
+  border-radius: 30%;
+  transition: 0.3s;
+}
+
+.server img:hover {
+  border-radius: 30%;
+  transition: 0.3s;
+}
+
+.homebutton:hover {
+  background-color: var(--blurple);
+  border-radius: 30%;
+  transition: 0.3s;
+}
+
+.server-divider {
+  position: absolute;
+  margin-top: 14px;
+  width: 35px;
+  background-color: var(--server-divider);
+  height: 2px;
+  border: none;
+  border-radius: 15px;
+}
+
+.side-bar {
+  grid-column-start: 3;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  position: relative;
+  float: right;
+  width: 80%;
+  height: 100vh;
+  background-color: var(--dark-primary);
+}
+.nav {
+  overflow-y: auto;
+}
+
+.navGuildItems {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  justify-content: center;
 }
 
-.guilds ul li {
+.guild-opener {
   display: flex;
   align-items: center;
-  gap: 10px;
-  list-style-type: none;
+  justify-content: center;
+  height: 40px;
 }
 
-.guilds img {
-  width: 35px;
-  border-radius: 3px;
+.navguild {
+  border-bottom: 1px solid var(--dark-server-list);
+}
+
+.guildDropdown {
+  margin-right: 43px;
+}
+.userBox {
+  position: absolute;
+  bottom: 0;
+  background-color: var(--user-box);
+  width: 100%;
+  height: 47px;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+}
+
+.userBox img {
+  width: 31px;
+  height: 30px;
+  margin-left: 10px;
+}
+
+.userAvatar {
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  margin: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  user-select: none;
+}
+
+.userAvatar:hover {
+  background-color: #000000;
+  opacity: 0.8;
+}
+
+.userinfo {
+  margin-left: 55px;
+  cursor: pointer;
+}
+
+.username {
+  display: block !important;
+  margin: 0;
+  font-size: 12px;
+}
+
+.discriminator {
+  display: block !important;
+  margin: 0;
+  font-weight: lighter;
+  color: var(--text-gray);
+  font-size: 12px;
+}
+
+.guildSelectorName {
+  user-select: none;
+  cursor: pointer;
+}
+
+.guildSelectorName input {
+  width: 200px;
+  background-color: #1e1f22;
+  border: none;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+input::placeholder {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.13px;
+  font-size: 12.5px;
+  color: #b9bbbe9a;
+}
+
+.usermenuicons {
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.mic,
+.headphone,
+.settings {
+  color: #b9bbbe;
+  padding: 3px;
+  user-select: none;
+  cursor: pointer;
+}
+
+.mic svg,
+.headphone svg,
+.settings svg {
+  height: 20px;
+  width: 20px;
+  fill: var(--iconColor);
+}
+
+.mic:hover,
+.headphone:hover,
+.settings:hover {
+  background-color: var(--dark-bg);
+}
+
+.icon-strikethrough {
+  fill: var(--red);
+}
+
+.alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
 }
