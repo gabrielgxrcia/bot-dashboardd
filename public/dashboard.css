@@ -157,6 +157,70 @@ body {
 .guildDropdown {
   margin-right: 43px;
 }
+
+.access {
+  display: flex;
+  margin-top: 7px;
+  flex-direction: column;
+  padding-left: 25px;
+}
+
+.access h3 {
+  font-family: 'Roboto';
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: 0.3px;
+}
+
+.friends,
+.nitro,
+.messages {
+  gap: 13px;
+  display: flex;
+  align-items: center;
+  color: var(--iconColor);
+}
+
+.friends:hover,
+.nitro:hover,
+.messages:hover {
+  background-color: var(--dark-bg);
+  border-radius: 4px;
+}
+
+.direct-msg {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+  padding: 15px;
+  font-weight: 500;
+  color: var(--iconColor);
+}
+
+.direct-msg svg {
+  width: 17px;
+}
+
+.addDirectMessages {
+  cursor: pointer;
+}
+
+.tooltip {
+  position: absolute;
+  z-index: 1;
+  display: none;
+  background-color: #111214;
+  color: var(--iconColor);
+  font-weight: 600;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: 'Roboto';
+  white-space: nowrap;
+}
+
 .userBox {
   position: absolute;
   bottom: 0;
@@ -218,15 +282,20 @@ body {
   background-color: #1e1f22;
   border: none;
   border-radius: 4px;
-  padding: 5px;
+  padding: 6.5px;
 }
 
 input::placeholder {
-  font-family: 'Open Sans', sans-serif;
   font-weight: 500;
   letter-spacing: 0.13px;
   font-size: 12.5px;
   color: #b9bbbe9a;
+}
+
+input:focus {
+  color: #b9bbbe9a;
+  box-shadow: 0 0 0 0;
+  outline: 0;
 }
 
 .usermenuicons {
@@ -256,6 +325,7 @@ input::placeholder {
 .mic:hover,
 .headphone:hover,
 .settings:hover {
+  border-radius: 4px;
   background-color: var(--dark-bg);
 }
 
@@ -263,14 +333,8 @@ input::placeholder {
   fill: var(--red);
 }
 
-.alert {
-  position: fixed;
+.chat {
+  position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  z-index: 9999;
 }
