@@ -5,10 +5,11 @@ const path = require('path')
 const Discord = require('discord.js')
 const { Client, GatewayIntentBits, Partials } = require('discord.js')
 const DiscordOauth2 = require('discord-oauth2')
+const axios = require('axios')
 const dotenv = require('dotenv')
-const bodyParser = require('body-parser')
 const ejs = require('ejs')
 const session = require('express-session')
+const bodyParser = require('body-parser')
 
 dotenv.config()
 const sessionSecret =
@@ -19,7 +20,8 @@ const app = express()
 app.set('view engine', 'ejs')
 app.set('js', 'application/javascript')
 app.set('html', 'text/html')
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 app.use(express.static('public'))
 app.use(
   session({
@@ -125,16 +127,28 @@ app.get('/dashboard', async (req, res) => {
   }
 })
 
-app.post('/send', async (req, res) => {
+const webhookUrl =
+  'https://discord.com/api/webhooks/1079994229461356555/kmCsf-0fX2Rsg3UZHSa4UIDNy2617MNmohxoEqua1xORG2gqZuXi2XIKLwLzNBpbmDoQ'
+
+app.post('/message', async (req, res) => {
   try {
-    const { message, channelID, guildID } = req.body
-    const guild = await client.guilds.fetch(guildID)
-    const channel = await guild.channels.fetch(channelID)
-    await channel.send(message)
+    const { message } = req.body
+    const { access_token } = req.session.token
+    const fullUser = await oauth.getUser(access_token, {
+      scopes: ['identify'],
+    })
+    const { username, avatar } = fullUser
+    const avatarURL = `https://cdn.discordapp.com/avatars/${fullUser.id}/${avatar}.png`
+    const payload = {
+      username,
+      avatar_url: avatarURL,
+      content: message,
+    }
+    await axios.post(webhookUrl, payload)
     res.redirect('/dashboard')
   } catch (err) {
     console.error(err)
-    res.sendStatus(500)
+    res.redirect('/login')
   }
 })
 

@@ -6,20 +6,11 @@
   </head>
   <body>
     <div class="chat">
-      <form action="/send" method="post">
-        <label for="message">Message:</label>
-        <input type="text" id="message" name="message" required />
+      <form method="POST" action="/message">
         <input
-          type="hidden"
-          id="channelID"
-          name="channelID"
-          value="1074762579831959552"
-        />
-        <input
-          type="hidden"
-          id="guildID"
-          name="guildID"
-          value="829175548067971153"
+          type="text"
+          name="message"
+          placeholder="Digite sua mensagem..."
         />
         <button type="submit">Enviar</button>
       </form>
