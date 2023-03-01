@@ -17,12 +17,15 @@ const sessionSecret =
 const discordAPIToken = process.env.DISCORD_API_TOKEN
 
 const app = express()
+
 app.set('view engine', 'ejs')
 app.set('js', 'application/javascript')
 app.set('html', 'text/html')
+
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.static('public'))
+
 app.use(
   session({
     secret: sessionSecret,
@@ -153,12 +156,10 @@ app.post('/message', async (req, res) => {
 })
 
 client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}`)
+  console.log(`Você se logou em: ${client.user.tag}`)
 })
 
-client.login(
-  'MTA3NjcwMTM2NDExNTIxNDQ1OA.GKAbgf.mt6DO_CG-UE290ge7lB8CPeY-mLKBABBbbesUI'
-)
+client.login(discordAPIToken)
 
 const options = {
   key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
@@ -166,5 +167,5 @@ const options = {
 }
 
 https.createServer(options, app).listen(443, () => {
-  console.log('Server started on port 443')
+  console.log('Discord está online na porta: 443')
 })

@@ -305,6 +305,10 @@ input:focus {
   align-items: center;
 }
 
+.line {
+  display: none;
+}
+
 .mic,
 .headphone,
 .settings {
@@ -334,7 +338,97 @@ input:focus {
 }
 
 .chat {
+  position: fixed;
+  bottom: 20px;
+  right: 500px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #383a40;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+
+.input-container button {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: var(--iconColor);
+  font-size: 18px;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.input-container button:hover {
+  color: var(--text-gray);
+}
+
+.input-container input {
+  background-color: transparent;
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  padding: 8px;
+}
+
+::placeholder {
+  color: #383a40;
+  opacity: 1;
+}
+
+:-ms-input-placeholder {
+  color: #383a40;
+}
+
+::-ms-input-placeholder {
+  color: #383a40;
+}
+
+ion-icon[name='happy'] {
+  width: 24px;
+  height: 24px;
+}
+
+#emoji-list {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  background-color: #2b2d31;
+  border: 1px solid var(--user-box);
+  border-radius: 5px;
+  padding: 10px;
+  z-index: 1;
+  overflow-y: auto;
+  bottom: calc(100% + 10px);
+  left: 35%;
+  width: 350px;
+  max-height: 250px;
+  scrollbar-width: thin;
+  scrollbar-color: #202225 #2f3136;
+}
+
+#emoji-list::-webkit-scrollbar {
+  width: 3px;
+  height: 1px;
+}
+
+#emoji-list::-webkit-scrollbar-track {
+  background: #2f3136;
+  border-radius: 10px;
+}
+
+#emoji-list::-webkit-scrollbar-thumb {
+  background: #202225;
+  border-radius: 10px;
+}
+
+#emoji-list span {
+  margin-left: 6px;
+  font-size: 23.1px;
+  cursor: pointer;
 }
