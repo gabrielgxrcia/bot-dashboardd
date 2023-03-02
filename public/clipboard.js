@@ -225,3 +225,29 @@ headphoneIcon.addEventListener('click', function () {
     redLine.style.display = 'none'
   }
 })
+
+const avatar = document.querySelector('#avatar')
+const currentStatusIcon = document.querySelector('#currentStatus ion-icon')
+
+avatar.addEventListener('click', () => {
+  const status = currentStatusIcon.getAttribute('name')
+  switch (status) {
+    case 'ellipse':
+      currentStatusIcon.setAttribute('name', 'ellipse-outline')
+      currentStatusIcon.setAttribute('style', 'color: black')
+      break
+    case 'ellipse-outline':
+      currentStatusIcon.setAttribute('name', 'moon')
+      currentStatusIcon.setAttribute(
+        'style',
+        'color: #f0b232; transform: rotate(260deg);'
+      )
+      break
+    case 'moon':
+      currentStatusIcon.setAttribute('name', 'ellipse')
+      currentStatusIcon.setAttribute('style', 'color: #23a55a')
+      break
+    default:
+      break
+  }
+})

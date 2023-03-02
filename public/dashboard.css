@@ -293,7 +293,7 @@ input::placeholder {
 }
 
 input:focus {
-  color: #b9bbbe9a;
+  color: var(--iconColor)
   box-shadow: 0 0 0 0;
   outline: 0;
 }
@@ -432,3 +432,47 @@ ion-icon[name='happy'] {
   font-size: 23.1px;
   cursor: pointer;
 }
+
+.statusBox {
+  position: absolute;
+  top: 28px;
+  right: 197px;
+  background-color: var(--dark-primary);
+  color: white;
+  font-size: 12px;
+  border-radius: 50%;
+  opacity: 1;
+}
+
+.statusOption {
+  display: flex;
+  align-items: center;
+  padding: 6px;
+  cursor: pointer;
+}
+
+.statusOption ion-icon {
+  margin-right: 8px;
+}
+
+.statusOption ion-icon[selected] {
+  border: 2px solid white;
+  border-radius: 50%;
+  padding: 2px;
+}
+.statusOption ion-icon[name="ellipse-sharp"]::before {
+  content: "";
+  display: block;
+  height: 4px;
+  width: 12px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 1px;
+}
+.currentStatus span {
+  margin-right: 8px;
+}
+

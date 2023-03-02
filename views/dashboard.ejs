@@ -109,7 +109,6 @@
             </div>
           </div>
         </div>
-
         <div class="access">
           <div class="friends">
             <svg
@@ -192,8 +191,14 @@
           </svg>
           <div class="tooltip">Create DM</div>
         </div>
+        
         <div class="userBox">
-          <img src="<%= user.avatarURL %>" alt="avatar" class="userAvatar" />
+          <img src="<%= user.avatarURL %>" alt="avatar" class="userAvatar" id="avatar">
+          <div class="statusBox">
+            <div class="currentStatus" id="currentStatus">
+              <ion-icon name="ellipse" style="color: green;" class="selected"></ion-icon>
+            </div>
+            </div>
           <div class="userinfo">
             <h4 class="username" id="username"><%= user.username %></h4>
             <h6 class="discriminator" id="discriminator">
